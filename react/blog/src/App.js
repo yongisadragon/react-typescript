@@ -9,7 +9,7 @@ function App() {
   ]);
   const [따봉, 따봉변경] = useState(0);
   const [modal, setModal] = useState(false);
-
+  const [title, setTitle] = useState(0);
   return (
     <div className="App">
       <div className="black-nav">
@@ -40,49 +40,60 @@ function App() {
         글수정
       </button>
 
-      <div className="list">
-        <h4>
-          {글제목[0]}
-          <span
-            onClick={() => {
-              따봉변경(따봉 + 1);
-            }}
-          >
-            👍🏽
-          </span>
-          {따봉}
-        </h4>
-        <p>7월 4일 발행</p>
-      </div>
+      {글제목.map((v, i) => {
+        return (
+          <div className="list" key={i}>
+            <h4
+              onClick={() => {
+                setModal(!modal);
+                setTitle(i);
+              }}
+            >
+              {글제목[i]}
+              <span
+                onClick={() => {
+                  따봉변경(따봉 + 1);
+                }}
+              >
+                👍🏽
+              </span>
+              {따봉}
+            </h4>
+            <p>7월 4일 발행</p>
+          </div>
+        );
+      })}
 
-      <div className="list">
-        <h4>{글제목[1]}</h4>
-        <p>7월 4일 발행</p>
-      </div>
-
-      <div className="list">
-        <h4
-          onClick={() => {
-            setModal(!modal);
-            // !state 의 의미는 state를 항상 반대로 바꿔준다. !true는 출력해보면 false, !false는 출력해보면 true이다.
-          }}
-        >
-          {글제목[2]}
-        </h4>
-        <p>7월 4일 발행</p>
-      </div>
-
-      {modal == true ? <Modal /> : null}
+      {modal == true ? (
+        <Modal 글제목변경={글제목변경} 글제목={글제목} title={title} />
+      ) : null}
     </div>
   );
 }
 
-const Modal = () => {
+const Modal = ({ 글제목, 글제목변경, title }) => {
   return (
     <div className="modal">
-      <h4>제목</h4>
+      <h4>{글제목[title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button
+        onClick={() => {
+          글제목변경((prev) => {
+            const copy = [...prev];
+            copy[0] = "여자코트추천";
+            return copy;
+          });
+        }}
+        //혹은
+        //  onClick={()=>{
+        //   const copy = [...글제목];
+        //   copy[0] = '여자코트추천';
+        //   글제목변경(copy);
+        // }}
+      >
+        글 수정
+      </button>
     </div>
   );
 };
