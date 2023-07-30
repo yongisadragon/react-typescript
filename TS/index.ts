@@ -14,7 +14,7 @@ let union: string[] | number = 123;
 type Name = string | number;
 let 타입: Name = 123;
 
-//함수에도 타입 지정이 가능하다. 파라미터도 일종의 변수이기 때문에 파라미터에도 타입을 지정해 줄 수 있다. 그 옆에는 return 될 타입의 종류 역시 지정이 가능하다. 즉, 이식은 파라미터로 number, return 값 역시 number가 되어야 한다.
+//함수에도 타입 지정이 가능하다. 파라미터도 일종의 변수이기 때문에 파라미터에도 타입을 지정해 줄 수 있다. 그 옆에는 return값의 타입 종류 역시 지정이 가능하다. 즉, 이식은 파라미터로 number, return 값 역시 number가 되어야 한다.
 function 함수(x: number): number {
   return x * 2;
 }
@@ -129,3 +129,53 @@ let 학교: {
 };
 학교.score[4] = false;
 학교.friend = ["Lee", 학교.teacher];
+
+// 함수에는 void라는 타입이있음. return 쓰기 싫은 함수들. void는 '텅비었다'라는 의미로, return값 뱉어내고 싶지 않을 때 씀.
+function func(x: number): void {}
+
+func(); //또한, js와 다른점은 타입이 지정된(number) 파라미터는 필수로 넣어줘야한다. 파라미터변수 뒤에 -> 파라미터변수?:타입 이런식으로 ? 붙여줘야 상관없다고 표현할 수 있음. '변수?:타입'은 '변수:타입|undefined' 와 같음
+
+//퀴즈: 여기서 x+2는 왜 에러가 뜸?
+//답: x는 유니온 타입이다. ts는 엄격하기 때문에 x가 넘버 혹은 문자라는 애매한 타입지정은 연산 안해줌. 문자+숫자/숫ㅈ+숫자도 가능. 이외엔 불가능.
+function 함함수(x: number | string): void {
+  console.log(x + 2);
+}
+함함수(2);
+
+
+//이런 식으로 바꿔줘야하는데, if안의 조건처럼 엄격하게 조건 설정하는 것을 narrowing이라고함.
+function 함함수2(x: number | string): void {
+  if(x의 타입이 숫자면) {
+  console.log(x + 2);
+  }
+}
+함함수(2);
+
+
+// 이름을 파라미터로 입력하면 인사를 출력하는 ㅎ마수
+function namer(x?:string):void{
+  if(x){
+    console.log(`안녕하세요 ${x}`)
+} else {
+  console.log('없읍니다')
+}
+}
+namer('홍길동')
+
+//함수에 숫자 또는 문자를 집어넣으면 자릿수를 세어 출력해주는 함수, 문자에 .length입력가능
+function calcNum(x:string|number):number{
+  return x.toString().length
+}
+
+function 결혼가능하냐(money:number,house:boolean,face:string):string|void{
+  let score:number = 0;
+  if(money){
+    score+=money
+  } if(house){
+    score+=500;
+  } if(face==='상'){
+    score+=100;
+  }
+  if(score>=600) return '결혼가능'
+}
+console.log(결혼가능하냐(100,true,'상'))

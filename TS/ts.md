@@ -19,3 +19,9 @@
 
 2. 그냥 React 프로젝트를 새로 만들거면 -> 새로 작업폴더를 하나 만드시고 거기서 에디터와 터미널을 오픈한 다음
    `npx create-react-app my-app --template typescript`
+
+### 0720
+
+**유니온 타입 사용**
+"이 변수엔 string 또는 number가 들어올 수 있습니다~" 라고 타입정의를 하고싶으면 | 연산자를 씁시다.
+OR 연산자 같은 느낌인데 이런 타입을 전문용어로 Union type 이라고 부릅니다.
