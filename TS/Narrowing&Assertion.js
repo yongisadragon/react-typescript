@@ -33,7 +33,7 @@ function 내함수3(x) {
 // 또는 if문 없이 타입을 덮어쓰는 assertion 문법이 있다.
 // 겉보기에는 매우 간결하고 쉬워서 as로 때우려고 할 수 있다. as문법의 정확한 용도는..
 // 1. 일단 내로잉 할때 쓸수는 있음. 다만 변수를 확정된 타입으로 확정짓고, 그것을 변경하려고 하면 안됨. 해당 예제처럼 유니온 타입과 같이 '애매한 타입'을 내로잉 할 때나 쓰는 거임.
-// 2. 무슨 타입이 들어올지 확신이 있을때 씀. as number라고 해놓고 함수 인자로 '123'이렇게 문자열 넣어도 버그 캐치못함.
+// 2. 무슨 타입이 들어올지 확신이 있을때 씀. as number라고 해놓고 변수는 유니온으로, 그런다음 함수 인자로 '123'이렇게 문자열 넣어도 as number해놔도 버그 캐치못함. 즉, 정말 필요할때 버그 추적 못함. 비상용 혹은 디버깅용임. 웬만하면 if문을 쓰셈. as는 그냥 주장만 하는거지 실제로 타입을 바꿔주는건 아니기 때문임.
 function 내함수4(x) {
     var arr = [];
     arr[0] = x; //이딴식으로 하면 ts가 x를 number로 인식해줌
@@ -42,3 +42,33 @@ function 내함수4(x) {
 // 그니까 어설션 이런식으로 쓰지말라구요.
 var 금지 = "no";
 금지;
+// quiz1. 숫자와 문자가 섞인 array를 입력하면 [num,num,num] 이렇게 숫자로 깔끔하게 변환되어 나오는 클리닝함수
+function cleaning(x) {
+    var cleaned = [];
+    x.forEach(function (y) {
+        if (typeof y === "string") {
+            cleaned.push(parseFloat(y));
+        }
+        else {
+            cleaned.push(y);
+        }
+    });
+    return cleaned;
+}
+console.log(cleaning([1, "2", 3]));
+// quiz2. 선생님이 가르치고 있는 과목중 맨 뒤의 1개를 return 해주는 함수를 만들어봅시다.
+// array는 object에 포함되므로 배열인지 판별부터.
+var 철수쌤 = { subject: "math" };
+var 영희쌤 = { subject: ["science", "english"] };
+var 민수쌤 = { subject: ["science", "art", "korean"] };
+function lastSbuject(x) {
+    if (Array.isArray(x.subject)) {
+        return x.subject[x.subject.length - 1];
+    }
+    else if (typeof x.subject === "string") {
+        return x.subject;
+    }
+    else {
+        return "없져";
+    }
+}
