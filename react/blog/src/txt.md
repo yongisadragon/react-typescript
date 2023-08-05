@@ -117,7 +117,7 @@ index.html이 메인페이지입니다.
 
 끝
 
-## 여기부턴 github 다루는 방법
+### 여기부턴 github 다루는 방법
 
 2. 근데 우린 무료 호스팅해주는 github pages에 올릴겁니다
 
