@@ -71,6 +71,7 @@ function removeDash(x: string): number {
  * 2. 집어넣은 결과를 result에 저장합니다.
  * 3. 그걸 다시 func2() 함수에 집어넣습니다.
  * 4. 최종결과를 콘솔창에 출력했습니다.
+ * 5. type alias는 헷갈리지 않게 마지막에 지정해줬음.
  */
 type 함수타입1 = (a: string) => string;
 type 함수타입2 = (a: string) => number;
