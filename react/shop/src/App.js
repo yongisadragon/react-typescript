@@ -1,8 +1,10 @@
 import "./App.css";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import 이미지1 from "./img/18ac3091-5615-4b51-b833-f3d8f909b35c.webp";
-
+import { useState } from "react";
+import { data } from "./data";
 function App() {
+  let [shoes] = useState(data);
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -14,40 +16,36 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
+
       <div
         className="main-bg"
         style={{ backgroundImage: `url(${이미지1})` }}
       ></div>
       <div className="container">
         <div className="row">
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </div>
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes2.jpg"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </div>
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes3.jpg"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </div>
+          <Item shoes={shoes} />
         </div>
       </div>
     </div>
   );
 }
+
+const Item = ({ shoes }) => {
+  return (
+    <>
+      {shoes?.map((shoe) => (
+        <div className="col-md-4">
+          <img
+            src={`https://codingapple1.github.io/shop/shoes${shoe.id + 1}.jpg`}
+            width="80%"
+          />
+          <h4>{shoe.title}</h4>
+          <p>{shoe.content}</p>
+          <p>{shoe.price}</p>
+        </div>
+      ))}
+    </>
+  );
+};
 
 export default App;
