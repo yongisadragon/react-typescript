@@ -25,6 +25,7 @@ if (link instanceof HTMLAnchorElement) {
 }
 var 버튼 = document.querySelector("#button");
 버튼 === null || 버튼 === void 0 ? void 0 : 버튼.addEventListener("click", function () {
+    // ?.는 내로잉으로 인정해준다.
     // 연습문제1. 이미지 이름바꾸기
     var 이미지 = document.querySelector("#image");
     if (이미지 instanceof HTMLImageElement) {
@@ -33,7 +34,7 @@ var 버튼 = document.querySelector("#button");
 });
 var 링크 = document.querySelectorAll(".naver");
 console.log(링크);
-//'링크'는 NodeList배열로 나옴.
+//'링크'는 querySelectorAll로 탐색했기 때문에 NodeList라는 배열로 정의됨.
 링크.forEach(function (a) {
     if (a instanceof HTMLAnchorElement) {
         a.href = "https://kakao.com";
