@@ -1,3 +1,4 @@
+// 클래스를 만들때에도 타입지정을 할 수 있다!
 // 클래스는 대문자 스타트가 관례
 var Yong = /** @class */ (function () {
     function Yong(a) {
