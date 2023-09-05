@@ -38,9 +38,39 @@ var _a = { student: true, age: 20 }, student = _a.student, age = _a.age;
 var _b = ["안녕", 100], a = _b[0], b = _b[1];
 // 함수에도 적용가능 합니다!
 var person = { student: true, age: 20 };
+//destructuring에도 타입지정을 하면 이렇게 됩니다.
+//{ student, age }를 임의의 인자로 설정해도됨.
 function 함수(_a) {
     var student = _a.student, age = _a.age;
     console.log(student, age); // true, 20
 }
 // 이렇게 하면 될걸요?
 함수(person);
+//문제1
+//숫자 여러개를 입력하면 최댓값을 return 해주는 함수
+function 최댓값() {
+    var nums = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        nums[_i] = arguments[_i];
+    }
+    var max = 0;
+    nums.forEach(function (para) {
+        if (max < para) {
+            //파라미터로 계속들어오는 값이 e이므로 0부터 시작하는 result보다 크면 계속 갈아끼워주도록 하면 결국 마지막에는 가장 큰수가 남음.
+            max = para;
+        }
+    });
+    return max;
+}
+console.log(최댓값(6, 3, 7, 2, 55));
+function userFunc(_a) {
+    var user = _a.user, comment = _a.comment, admin = _a.admin;
+    console.log(user, comment, admin);
+}
+userFunc({ user: "kim", comment: [3, 5, 4], admin: false });
+//array destructuring할 때는 자유작명이 가능합니다.
+function userFunc2(_a) {
+    var num = _a[0], str = _a[1], bool = _a[2];
+    console.log(num, str, bool);
+}
+userFunc2([40, "wine", false]);

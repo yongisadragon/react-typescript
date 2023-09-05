@@ -31,8 +31,45 @@ let [a, b] = ["안녕", 100];
 
 let person = { student: true, age: 20 };
 
+//destructuring에도 타입지정을 하면 이렇게 됩니다.
+//{ student, age }를 임의의 인자로 설정해도됨.
 function 함수({ student, age }: { student: boolean; age: number }) {
   console.log(student, age); // true, 20
 }
 // 이렇게 하면 될걸요?
 함수(person);
+
+//문제1
+//숫자 여러개를 입력하면 최댓값을 return 해주는 함수
+function 최댓값(...nums: number[]) {
+  let max = 0;
+  nums.forEach((para) => {
+    if (max < para) {
+      //파라미터로 계속들어오는 값이 e이므로 0부터 시작하는 result보다 크면 계속 갈아끼워주도록 하면 결국 마지막에는 가장 큰수가 남음.
+      max = para;
+    }
+  });
+  return max;
+}
+console.log(최댓값(6, 3, 7, 2, 55));
+
+//문제2
+//object 자료를 파라미터로 입력할 수 있는 함수를 만들어봅시다.
+type ObjType = { user: string; comment: number[]; admin: boolean };
+
+function userFunc({ user, comment, admin }: ObjType) {
+  console.log(user, comment, admin);
+}
+
+userFunc({ user: "kim", comment: [3, 5, 4], admin: false });
+
+//문제3
+//이렇게 생긴 array 자료를 파라미터로 입력할 수 있는 함수를 만들어봅시다.
+
+type ArrType = (number | string | boolean)[];
+//array destructuring할 때는 자유작명이 가능합니다.
+function userFunc2([num, str, bool]: ArrType) {
+  console.log(num, str, bool);
+}
+
+userFunc2([40, "wine", false]);
