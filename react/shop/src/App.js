@@ -1,20 +1,34 @@
 import "./App.css";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import 이미지1 from "./img/18ac3091-5615-4b51-b833-f3d8f909b35c.webp";
 import { useState } from "react";
 import { data } from "./data";
-import { Link, Route, Routes } from "react-router-dom";
-import Detail from "./component/Detail";
+import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import Detail from "./pages/Detail";
+
 function App() {
   let [shoes] = useState(data);
+  let navigate = useNavigate();
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">YONGISA MART</Navbar.Brand>
+          <Navbar.Brand href="/">YONGISA MART</Navbar.Brand>
           <Nav className="my-4 me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#pricing">Cart</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Home
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/detail");
+              }}
+            >
+              Detail
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -40,17 +54,32 @@ function App() {
           }
         />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/about" element={<div>어바웃페이지임</div>} />
+        <Route path="/about" element={<About />}>
+          <Route path="member" element={<div>멤버</div>} />
+          <Route path="location" element={<div>위치</div>} />
+        </Route>
+        {/* 404페이지를 위해, *는 이외의 모든 url경로를 뜻함 */}
+        <Route path="*" element={<div>없는 페이지</div>} />
       </Routes>
     </div>
   );
 }
 
+const About = () => {
+  return (
+    <div>
+      <h4>회사정보중</h4>
+      {/* Oulet은 nested 하위 요소들이 올 자리이다. */}
+      <Outlet />
+    </div>
+  );
+};
+
 const Item = ({ shoes }) => {
   return (
     <>
-      {shoes?.map((shoe) => (
-        <div className="col-md-4">
+      {shoes?.map((shoe, i) => (
+        <div className="col-md-4" key={i}>
           <img
             src={`https://codingapple1.github.io/shop/shoes${shoe.id + 1}.jpg`}
             width="80%"
