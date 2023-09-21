@@ -2,7 +2,7 @@
 
 class 유저 {
   //constructor 없이 필드에서 name = 'kim' 으로도 지정할 수 있지만, constructor(a)를 통해 a등과 같이 파라미터를 지원할 수 있다는 점이 차이 점임.
-  //class에서 쓰는 public 키워드.. 붙으면 모든 자식들이 이용 및 수정 가능
+  //class에서 쓰는 public 키워드.. 붙으면 모든 자식들이 이용 및 수정 가능. 사실 public 붙이든 안붙이든 똑같긴 합니다 . 필드값 같은걸 그냥 만들면 public이 몰래 왼쪽에 부여되기 때문입니다.
   //   public name = "kim";
 
   //private 붙으면 class 중괄호 안에서만 수정, 이용가능

@@ -17,6 +17,9 @@ function 이상한함수(para: string) {
   }
 }
 
-let 함수표현식 = function () {
+// 함수 선언문이 아무것도 return 하지 않고 끝나지도 않을 경우 void 타입이 자동으로 return 타입으로 할당되며
+// 함수 표현식이 아무것도 return 하지 않고 끝나지도 않을 경우 never 타입이 자동으로 return 타입으로 할당됩니다.
+
+let 이상한함수2 = function () {
   throw new Error();
 };
