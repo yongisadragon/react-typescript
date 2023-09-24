@@ -15,6 +15,9 @@ var 특징 = /** @class */ (function () {
 
 4. protected z는 private 키워드와 유사하게 class 내부에서만 사용이 가능한데 약간 범위가 넓어서 extends로 복사한 class 내부에서도 사용할 수 있습니다.
  */
+//숙제2
+// x 속성에 숫자를 더해주는 함수가 필요합니다.
+// static 멤버를 가져다 쓰는 함수에도 static이 필요.
 var User1 = /** @class */ (function () {
     function User1() {
     }
