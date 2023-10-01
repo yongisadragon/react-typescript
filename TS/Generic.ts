@@ -45,3 +45,31 @@ function 제너릭1<MyType4 extends string | string[]>(a: MyType4) {
 
 제너릭1<string>("hello");
 제너릭1<string[]>(["kim", "park"]);
+
+//숙제2. data라는 JSON 자료를 object { } 자료로 변환을 해서 return 해주는 함수를 만들어보십시오. 근데 변환된 object의 타입은 Animal이 되었으면 좋겠는데
+interface Animal2 {
+  name: string;
+  age: number;
+}
+
+let data = '{"name" : "dog", "age" : 1 }';
+
+function toObj<MyType5>(a: string): MyType5 {
+  return JSON.parse(a);
+}
+
+//result가 Animal2 타입을 가지게됨
+let result = toObj<Animal2>(data);
+console.log(result);
+
+//숙제3.
+//class에 제너릭 부여하기, 이런식으로 하면 new Person<>에 넣는 타입대로 class의 타입들을 지정할 수 있다. 함수에 제너릭을 지정하듯 클래스 네임 뒤와 컨스트럭터 파라미터 안에도 지정한 타입(string)을 부여할 수 있다.
+class Person3<Type> {
+  name;
+  constructor(a: Type) {
+    this.name = a;
+  }
+}
+
+let ayo = new Person3<string>("어쩌구");
+ayo.name; //string 타입이 되었넹!
