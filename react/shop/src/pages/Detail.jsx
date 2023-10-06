@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+//구식 컴포넌트 갈고리 다는 법
+// class Detail2 extends React.Component {
+//   componentDidMount() {
+//     //컴포넌트 mount시 여기 코드 실행됨
+//   }
+//   componentDidUpdate() {
+//     //컴포넌트 update시 여기 코드 실행됨
+//   }
+//   componentWillUnmount() {
+//     //컴포넌트 unmount시 여기 코드 실행됨
+//   }
+// }
+
+//요즘 컴포넌트 갈고리 다는 법 (useEffect)
+//mount, update시 코드 실행해주는 useEffect! 리액트상에서 개발을 할때에는 디버깅등의 이유로 두번 실행될 수 있음. 실제 사이트에서는 안그렇지만 이게 싫다면 index.js에서 React.StrictMode 이런거 없애시든가요.
+//사실 cosole.log()는 useEffect바깥에서도 실행이 된다. 그러면 useEffect는 왜, 언제쓰는가. -> txt참고..
+
 export default function Detail({ shoes }) {
+  useEffect(() => {
+    console.log("안녕");
+    setTimeout(() => {
+      document.querySelector(".alert").style.display = "none";
+    }, 2000);
+  });
+
   // let [shoes] = useState(data); 이런식으로 하면 상태값을 수정해야할 때, App.js에 있는 상태값과 두곳을 수정해야하는 번거로움이 있기때문에 데이터를 드릴링해주는게 좋다.(단계가 많지 않을때) 일반적으로 데이터는 한곳에서 관리하셈.
   // useParams라는 훅은 현재 유저가 URL 파라미터에 입력한 값을 가져온다. 예를들어 이 컴포넌트는 /detail/:id에 해당 하는 컴포넌트인데, 예를들어 유저가 detail/1 이라고 입력하면 useParams를 통해 1을 뿅 나오게 해준다. 이걸 어디에 쓰냐구? 데이터화 된 shoes에 순서를 매겨서 각각 다른 내용을 보여줄 때 활용하면 되지 않을까? 참고로 {}안에 작명이름은 router에서 :id 에 써준 이름과 일치해야합니다.
   let { id } = useParams();
@@ -12,6 +36,7 @@ export default function Detail({ shoes }) {
 
   return (
     <>
+      <div className="alert alert-warning">2초이내 구매시 할인</div>
       {!일치상품 ? (
         <p>해당 신발을 찾을 수 없습니다.</p>
       ) : (
