@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -20,23 +20,48 @@ import styled from "styled-components";
 //사실 cosole.log()는 useEffect바깥에서도 실행이 된다. 그러면 useEffect는 왜, 언제쓰는가. -> txt참고..
 
 export default function Detail({ shoes }) {
-  useEffect(() => {
-    console.log("안녕");
-    setTimeout(() => {
-      document.querySelector(".alert").style.display = "none";
-    }, 2000);
-  });
-
   // let [shoes] = useState(data); 이런식으로 하면 상태값을 수정해야할 때, App.js에 있는 상태값과 두곳을 수정해야하는 번거로움이 있기때문에 데이터를 드릴링해주는게 좋다.(단계가 많지 않을때) 일반적으로 데이터는 한곳에서 관리하셈.
   // useParams라는 훅은 현재 유저가 URL 파라미터에 입력한 값을 가져온다. 예를들어 이 컴포넌트는 /detail/:id에 해당 하는 컴포넌트인데, 예를들어 유저가 detail/1 이라고 입력하면 useParams를 통해 1을 뿅 나오게 해준다. 이걸 어디에 쓰냐구? 데이터화 된 shoes에 순서를 매겨서 각각 다른 내용을 보여줄 때 활용하면 되지 않을까? 참고로 {}안에 작명이름은 router에서 :id 에 써준 이름과 일치해야합니다.
   let { id } = useParams();
   //shoes가 배열이므로 find()는 배열중 일치하는(params의 id와 shoes data 고유 id와 일치하는) 첫 요소를 반환(배열이니까 여기 data에선 각 순서에 해당하는 객체(상품)를 반환할듯), 즉 일치상품이란 id값이 일치할때에만 생기는 변수값. data상에서 없는 아이디값을 입력하면 find는 undefined를 뱉음.
-  console.log(id);
   let 일치상품 = shoes.find((x) => x.id == id);
 
+  const [alert, setAlert] = useState(true);
+  const [inputTxt, setInputTxt] = useState("");
+
+  console.log(typeof inputTxt);
+
+  useEffect(() => {
+    console.log("안녕");
+    // 변수에 담아서 setTimeout해도 동작함. 이렇게 담으면 장점이 클린업 함수에서 제거할 수 있음.
+    let timer = setTimeout(() => {
+      //이건 매우 생자바스크립트 방식
+      // document.querySelector(".alert").style.display = "none";
+      setAlert(false); // ui 꺼주세요..
+      console.log(2);
+      return () => {
+        //useEffect 동작 전에 실행되는 return ()=>{}, 클린업 함수눈 mount시엔 실행x, unmount시에는 실행됨.
+        //예를 들어 서버에서 데이터 요청과 관련된 버그를 없애기 위해 사용하기도 함.
+        clearTimeout(timer);
+        console.log(1);
+      };
+    }, 2000);
+  }, []);
+  // 배열안에 다른값이 있으면 그 값이 변할때마다 실행 + mount 될때마다 실행 2가지 조건이 실행되기 때문에, 의존성 배열을 비우는것은 일종의 편법임(mount에만 실행되도록)
+
+  const inputHandler = (e) => {
+    setInputTxt(e.target.value);
+  };
+
+  useEffect(() => {
+    if (typeof inputTxt == "string") {
+      console.log("숫자만입력");
+    }
+  }, [inputTxt]);
   return (
     <>
-      <div className="alert alert-warning">2초이내 구매시 할인</div>
+      {alert && <div className="alert alert-warning">2초이내 구매시 할인</div>}
+
       {!일치상품 ? (
         <p>해당 신발을 찾을 수 없습니다.</p>
       ) : (
@@ -53,7 +78,8 @@ export default function Detail({ shoes }) {
               />
             </div>
             <div className="col-md-6">
-              <h4 className="pt-5">{일치상품.title}</h4>
+              <input onChange={inputHandler} type="text" />
+              <h4 className="pt-2">{일치상품.title}</h4>
               <p>{일치상품.content}</p>
               <p>{일치상품.price}</p>
               <button className="btn btn-danger">주문하기</button>

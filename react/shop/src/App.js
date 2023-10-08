@@ -52,13 +52,12 @@ function App() {
               ></div>
               <div className="container">
                 <div className="row">
-                  <Item shoes={shoes} />
+                  <Item navigate={navigate} shoes={shoes} />
                 </div>
               </div>
             </>
           }
         />
-        :URL 뒤에는
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버</div>} />
@@ -97,11 +96,18 @@ const Event = () => {
 };
 
 //Detail Page
-const Item = ({ shoes }) => {
+const Item = ({ shoes, navigate }) => {
   return (
     <>
       {shoes?.map((shoe, i) => (
-        <div className="col-md-4" key={i}>
+        <div
+          className="col-md-4"
+          key={i}
+          onClick={() => {
+            navigate(`detail/${shoe.id}`);
+          }}
+          style={{ cursor: "pointer" }}
+        >
           <img
             src={`https://codingapple1.github.io/shop/shoes${shoe.id + 1}.jpg`}
             width="80%"
