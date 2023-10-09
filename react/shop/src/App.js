@@ -8,11 +8,11 @@ import Detail from "./pages/Detail";
 import axios from "axios";
 
 function App() {
-  let [shoes] = useState(data);
-  let [moreShoes, setMoreShoes] = useState([]);
-  let [isMoreOk, setIsMoreOk] = useState(false);
-
+  let [shoes, setSheos] = useState(data);
+  let [isLoading, setIsLoading] = useState(false);
+  let [count, setCount] = useState(0);
   let navigate = useNavigate();
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -54,39 +54,64 @@ function App() {
                 className="main-bg"
                 style={{ backgroundImage: `url(${이미지1})` }}
               ></div>
+              {isLoading && <p className="mt-3">로딩중입니다 . . .</p>}
               <div className="container">
                 <div className="row">
                   <Item navigate={navigate} shoes={shoes} />
-                  {isMoreOk &&
-                    moreShoes &&
-                    moreShoes.map((item) => (
-                      <div className="col-md-4 mt-5" key={item.id}>
-                        <h4>{item.title}</h4>
-                        <p>{item.content}</p>
-                        <p>{item.price}</p>
-                      </div>
-                    ))}
                 </div>
               </div>
-              <button
-                //기본적은 axios사용법, 새로고침 없이 가져오는 깔끔한 방법
-                onClick={() => {
-                  axios
-                    .get("https://codingapple1.github.io/shop/data2.json")
-                    .then((res) => {
-                      console.log(res.data);
-                      setMoreShoes(res.data);
-                    })
-                    // url잘못, 서버가 인터넷 꺼진.. 실패할 경우 예외처리
-                    .catch(() => {
-                      console.log("실패했어요");
+              {count < 2 && (
+                <button
+                  //기본적은 axios사용법, 새로고침 없이 가져오는 깔끔한 방법
+                  onClick={() => {
+                    //더보기 토글
+                    setCount(count + 1);
+                    setIsLoading(true);
+                    console.log(count);
+                    Promise.all([
+                      axios.get(
+                        "https://codingapple1.github.io/shop/data2.json"
+                      ),
+                      axios.get(
+                        "https://codingapple1.github.io/shop/data3.json"
+                      ),
+                    ]).then((r) => {
+                      console.log(r); //2개가 배열로 동시에 들어옴
+                      setTimeout(() => {
+                        setIsLoading(false);
+                        if (count == 0) {
+                          let copy = [...shoes, ...r[0].data];
+                          setSheos(copy);
+                        } else if (count == 1) {
+                          let copy2 = [...shoes, ...r[1].data];
+                          setSheos(copy2);
+                        } else {
+                          alert("없어요 더이상");
+                        }
+                      }, 600);
                     });
-                  //false
-                  setIsMoreOk(!isMoreOk);
-                }}
-              >
-                더보기
-              </button>
+                    // axios
+                    //   .get("https://codingapple1.github.io/shop/data2.json")
+                    //   .then((res) => {
+                    //     console.log(res.data);
+                    //     //기존 데이터 배열에 새로운 데이터 넣기.
+                    //     let copy = [...shoes, ...res.data];
+                    //     setSheos(copy);
+                    //   })
+                    //   // url잘못, 서버가 인터넷 꺼진.. 실패할 경우 예외처리
+                    //   .catch(() => {
+                    //     console.log("실패했어요");
+                    //   });
+                    // axios
+                    //   .get("https://codingapple1.github.io/shop/data3.json")
+                    //   .then((res) => {
+                    //     let copy2 = [...shoes, ...res.data];
+                    //   });
+                  }}
+                >
+                  더보기
+                </button>
+              )}
             </>
           }
         />
