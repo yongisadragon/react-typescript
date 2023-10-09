@@ -5,9 +5,13 @@ import { useState } from "react";
 import { data } from "./data";
 import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Detail from "./pages/Detail";
+import axios from "axios";
 
 function App() {
   let [shoes] = useState(data);
+  let [moreShoes, setMoreShoes] = useState([]);
+  let [isMoreOk, setIsMoreOk] = useState(false);
+
   let navigate = useNavigate();
   return (
     <div className="App">
@@ -53,8 +57,36 @@ function App() {
               <div className="container">
                 <div className="row">
                   <Item navigate={navigate} shoes={shoes} />
+                  {isMoreOk &&
+                    moreShoes &&
+                    moreShoes.map((item) => (
+                      <div className="col-md-4 mt-5" key={item.id}>
+                        <h4>{item.title}</h4>
+                        <p>{item.content}</p>
+                        <p>{item.price}</p>
+                      </div>
+                    ))}
                 </div>
               </div>
+              <button
+                //기본적은 axios사용법, 새로고침 없이 가져오는 깔끔한 방법
+                onClick={() => {
+                  axios
+                    .get("https://codingapple1.github.io/shop/data2.json")
+                    .then((res) => {
+                      console.log(res.data);
+                      setMoreShoes(res.data);
+                    })
+                    // url잘못, 서버가 인터넷 꺼진.. 실패할 경우 예외처리
+                    .catch(() => {
+                      console.log("실패했어요");
+                    });
+                  //false
+                  setIsMoreOk(!isMoreOk);
+                }}
+              >
+                더보기
+              </button>
             </>
           }
         />

@@ -26,18 +26,17 @@ export default function Detail({ shoes }) {
   //shoes가 배열이므로 find()는 배열중 일치하는(params의 id와 shoes data 고유 id와 일치하는) 첫 요소를 반환(배열이니까 여기 data에선 각 순서에 해당하는 객체(상품)를 반환할듯), 즉 일치상품이란 id값이 일치할때에만 생기는 변수값. data상에서 없는 아이디값을 입력하면 find는 undefined를 뱉음.
   let 일치상품 = shoes.find((x) => x.id == id);
 
-  const [alert, setAlert] = useState(true);
+  const [alerted, setalerted] = useState(true);
   const [inputTxt, setInputTxt] = useState("");
 
   console.log(typeof inputTxt);
 
   useEffect(() => {
-    console.log("안녕");
     // 변수에 담아서 setTimeout해도 동작함. 이렇게 담으면 장점이 클린업 함수에서 제거할 수 있음.
     let timer = setTimeout(() => {
       //이건 매우 생자바스크립트 방식
-      // document.querySelector(".alert").style.display = "none";
-      setAlert(false); // ui 꺼주세요..
+      // document.querySelector(".alerted").style.display = "none";
+      setalerted(false); // ui 꺼주세요..
       console.log(2);
       return () => {
         //useEffect 동작 전에 실행되는 return ()=>{}, 클린업 함수눈 mount시엔 실행x, unmount시에는 실행됨.
@@ -53,14 +52,19 @@ export default function Detail({ shoes }) {
     setInputTxt(e.target.value);
   };
 
+  //input값에 숫자 이외엔 허용하지 않는 함수를 만드려면?
   useEffect(() => {
-    if (typeof inputTxt == "string") {
-      console.log("숫자만입력");
+    if (isNaN(inputTxt)) {
+      alert("숫자만!");
+      setInputTxt("");
     }
   }, [inputTxt]);
+
   return (
     <>
-      {alert && <div className="alert alert-warning">2초이내 구매시 할인</div>}
+      {alerted && (
+        <div className="alert alert-warning">2초이내 구매시 할인</div>
+      )}
 
       {!일치상품 ? (
         <p>해당 신발을 찾을 수 없습니다.</p>
@@ -78,7 +82,7 @@ export default function Detail({ shoes }) {
               />
             </div>
             <div className="col-md-6">
-              <input onChange={inputHandler} type="text" />
+              <input value={inputTxt} onChange={inputHandler} type="text" />
               <h4 className="pt-2">{일치상품.title}</h4>
               <p>{일치상품.content}</p>
               <p>{일치상품.price}</p>
