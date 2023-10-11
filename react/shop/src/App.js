@@ -80,6 +80,7 @@ function App() {
                       setTimeout(() => {
                         setIsLoading(false);
                         if (count == 0) {
+                          //기존 데이터 배열에 새로운 데이터 넣기.
                           let copy = [...shoes, ...r[0].data];
                           setSheos(copy);
                         } else if (count == 1) {
@@ -90,23 +91,6 @@ function App() {
                         }
                       }, 600);
                     });
-                    // axios
-                    //   .get("https://codingapple1.github.io/shop/data2.json")
-                    //   .then((res) => {
-                    //     console.log(res.data);
-                    //     //기존 데이터 배열에 새로운 데이터 넣기.
-                    //     let copy = [...shoes, ...res.data];
-                    //     setSheos(copy);
-                    //   })
-                    //   // url잘못, 서버가 인터넷 꺼진.. 실패할 경우 예외처리
-                    //   .catch(() => {
-                    //     console.log("실패했어요");
-                    //   });
-                    // axios
-                    //   .get("https://codingapple1.github.io/shop/data3.json")
-                    //   .then((res) => {
-                    //     let copy2 = [...shoes, ...res.data];
-                    //   });
                   }}
                 >
                   더보기

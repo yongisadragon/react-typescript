@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -28,8 +29,8 @@ export default function Detail({ shoes }) {
 
   const [alerted, setalerted] = useState(true);
   const [inputTxt, setInputTxt] = useState("");
-
-  console.log(typeof inputTxt);
+  const [tabCount, setTabCount] = useState(0);
+  const tabContents = [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>];
 
   useEffect(() => {
     // 변수에 담아서 setTimeout해도 동작함. 이렇게 담으면 장점이 클린업 함수에서 제거할 수 있음.
@@ -46,7 +47,7 @@ export default function Detail({ shoes }) {
       };
     }, 2000);
   }, []);
-  // 배열안에 다른값이 있으면 그 값이 변할때마다 실행 + mount 될때마다 실행 2가지 조건이 실행되기 때문에, 의존성 배열을 비우는것은 일종의 편법임(mount에만 실행되도록)
+  //배열안에 다른값이 있으면 그 값이 변할때마다 실행 + mount 될때마다 실행 2가지 조건이 실행되기 때문에, 의존성 배열을 비우는것은 일종의 편법임(mount에만 실행되도록)
 
   const inputHandler = (e) => {
     setInputTxt(e.target.value);
@@ -89,6 +90,43 @@ export default function Detail({ shoes }) {
               <button className="btn btn-danger">주문하기</button>
             </div>
           </div>
+          <Nav variant="tabs" defaultActiveKey="link0">
+            <Nav.Item>
+              <Nav.Link
+                onClick={() => {
+                  setTabCount(0);
+                }}
+                eventKey="link0"
+              >
+                버튼0
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                onClick={() => {
+                  setTabCount(1);
+                }}
+                eventKey="link1"
+              >
+                버튼1
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                onClick={() => {
+                  setTabCount(2);
+                }}
+                eventKey="link2"
+              >
+                버튼2
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          {/* return 안에는 if문을 못쓰니 삼항연산자를 써야하는데, 삼항도 길어지면
+          컴포넌트를 새로 생성하고, 그안에서 다시 조건에 의한 렌더링
+          보여줘야합니다. 이렇게하면 배열과 단순 숫자 state만을 사용해서 삼항도
+          필요없지 않을까요? */}
+          {tabContents[tabCount]}
         </div>
       )}
     </>
