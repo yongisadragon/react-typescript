@@ -30,6 +30,8 @@ export default function Detail({ shoes }) {
   const [alerted, setalerted] = useState(true);
   const [inputTxt, setInputTxt] = useState("");
   const [tabCount, setTabCount] = useState(0);
+  const [fade, setFade] = useState("");
+  const [fade2, setFade2] = useState("");
   const tabContents = [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>];
 
   useEffect(() => {
@@ -61,6 +63,25 @@ export default function Detail({ shoes }) {
     }
   }, [inputTxt]);
 
+  // className 변경으로 애니메이팅 주기 위한 uesEffect. 이런식으로 setTime을 안해주면 automatic batching에 의해 state가 일괄처리되게 되어 내용이 아얘 안보이거나, 의도한대로 className state를 바꿀 수 없다. 참고로 클린업 함수로 클래스네임을 의도적으로 비웠다가 다시 넣는 방식.
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setFade("end");
+    }, 100);
+    return () => {
+      clearTimeout(timer);
+      setFade("");
+    };
+  }, [tabCount]);
+
+  //detail 컴포넌트 투명도 애니메이션
+  useEffect(() => {
+    setFade2("end");
+    return () => {
+      setFade2("");
+    };
+  }, []);
+
   return (
     <>
       {alerted && (
@@ -70,7 +91,7 @@ export default function Detail({ shoes }) {
       {!일치상품 ? (
         <p>해당 신발을 찾을 수 없습니다.</p>
       ) : (
-        <div className="container">
+        <div className={"container start " + fade2}>
           <YellowBtn bg="blue">버튼</YellowBtn>
           <YellowBtn bg="yellow">버튼</YellowBtn>
           <div className="row">
@@ -126,7 +147,7 @@ export default function Detail({ shoes }) {
           컴포넌트를 새로 생성하고, 그안에서 다시 조건에 의한 렌더링
           보여줘야합니다. 이렇게하면 배열과 단순 숫자 state만을 사용해서 삼항도
           필요없지 않을까요? */}
-          {tabContents[tabCount]}
+          <div className={`start ${fade}`}>{tabContents[tabCount]}</div>
         </div>
       )}
     </>
