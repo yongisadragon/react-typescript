@@ -25,3 +25,31 @@
 **유니온 타입 사용**
 "이 변수엔 string 또는 number가 들어올 수 있습니다~" 라고 타입정의를 하고싶으면 | 연산자를 씁시다.
 OR 연산자 같은 느낌인데 이런 타입을 전문용어로 Union type 이라고 부릅니다.
+
+### 1013
+
+React에서 TS 쓰는법 요약
+변수, 함수 만들 때 타입 지정하면 그게 전부임
+
+새로운 react-ts
+`npx create-react-app 프로젝트명 --template typescript`
+
+기존프로젝트
+`npm install --save typescript @types/node @types/react @types/react-dom @types/jest`
+
+기본적으로 .ts
+react내부에서 jsx문법이 있다하면 .tsx (html있는 파일)
+
+-함수의 타입 지정은 return 값과 파라미터에 타입 지정이 가능함.
+
+리액트에서 type assertion 문법 사용할 때
+
+let code: any = 123;
+let employeeCode = <number> code; //안됩니다
+assertion 하고 싶으면 as 또는 <> 쓰면 되는데
+
+리액트에서 컴포넌트로 오해할 수 있어서 꺾쇠 괄호는 리액트에서 쓰지않습니다.
+
+as 키워드만 씁시다.
+
+하지만 as 키워드는 타입스크립트 보안해제기 때문에 타입이 100% 확실할 때만 사용하도록 합시다.
