@@ -6,7 +6,7 @@ import "./App.css";
 let a: string = "kim";
 let b: JSX.Element = <div></div>;
 function App() {
-  // useState 값에 타입지정, 타입이 저절로 잘 지정되는데, 간혹 string number 이딴식으로 짜고 싶다면, <string | number> 같이 제너릭으로 짜면된다.
+  // useState 값에 타입지정, 타입이 저절로 잘 지정되는데, 간혹 (string | number) 이딴식으로 짜고 싶다면, <string | number> 같이 제너릭으로 짜면된다.
   let [user, setUser] = useState<string | number>("kim");
 
   return (

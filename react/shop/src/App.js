@@ -6,6 +6,7 @@ import { data } from "./data";
 import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Detail from "./pages/Detail";
 import axios from "axios";
+import Cart from "./pages/Cart";
 
 function App() {
   let [shoes, setSheos] = useState(data);
@@ -110,6 +111,8 @@ function App() {
         </Route>
         {/* 404페이지를 위해, *는 이외의 모든 url경로를 뜻함 */}
         <Route path="*" element={<div>없는 페이지</div>} />
+
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </div>
   );

@@ -137,3 +137,6 @@ createContext를 export 하고 사용할 컴포넌트에서 import를 하면, �
 
 Context API의 단점은,
 상위에서 사용한 state가 변경되면 하위에서 Context로 state를 사용하지 않아도 전부 재렌더링이 된다. (쓸데없는 것까지 재렌더링) 큰 사이즈에선 성능이슈, 다른 페이지에서 import등을 마구잡이로 하다보면 재사용이 힘들다..
+
+### 1014 
+Route + Redux toolkit 복습
