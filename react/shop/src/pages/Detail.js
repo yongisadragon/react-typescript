@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { addItem } from "../store";
 
 //구식 컴포넌트 갈고리 다는 법
 // class Detail2 extends React.Component {
@@ -31,6 +33,8 @@ export default function Detail({ shoes }) {
   const [inputTxt, setInputTxt] = useState("");
   const [tabCount, setTabCount] = useState(0);
   const [fade2, setFade2] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 변수에 담아서 setTimeout해도 동작함. 이렇게 담으면 장점이 클린업 함수에서 제거할 수 있음.
@@ -95,7 +99,21 @@ export default function Detail({ shoes }) {
               <h4 className="pt-2">{일치상품.title}</h4>
               <p>{일치상품.content}</p>
               <p>{일치상품.price}</p>
-              <button className="btn btn-danger">주문하기</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  dispatch(
+                    addItem({
+                      id: 일치상품.id,
+                      name: 일치상품.title,
+                      count: 1,
+                    })
+                  );
+                  // navigate("/cart");
+                }}
+              >
+                주문하기
+              </button>
             </div>
           </div>
           <Nav variant="tabs" defaultActiveKey="link0">

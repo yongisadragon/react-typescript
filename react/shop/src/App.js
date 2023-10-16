@@ -29,17 +29,10 @@ function App() {
             </Nav.Link>
             <Nav.Link
               onClick={() => {
-                navigate("/detail");
+                navigate("/cart");
               }}
             >
-              Detail
-            </Nav.Link>
-            <Nav.Link
-              onClick={() => {
-                navigate("/about");
-              }}
-            >
-              About
+              Cart
             </Nav.Link>
           </Nav>
         </Container>
@@ -111,7 +104,6 @@ function App() {
         </Route>
         {/* 404페이지를 위해, *는 이외의 모든 url경로를 뜻함 */}
         <Route path="*" element={<div>없는 페이지</div>} />
-
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </div>
@@ -145,7 +137,7 @@ const Item = ({ shoes, navigate }) => {
     <>
       {shoes?.map((shoe, i) => (
         <div
-          className="col-md-4"
+          className="col-md-4 hoverItem"
           key={i}
           onClick={() => {
             navigate(`detail/${shoe.id}`);

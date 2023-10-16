@@ -144,7 +144,29 @@ Route + Redux toolkit 복습
 리덕스 왜씀? -컴포너늩간 state 공유를 편하게 하기 위해, props 전송 필요가 없어짐.
 
 Redux 편하니까 맨날 쓰면 되겠네요?
-
 간단한거 만들 때
 컴포넌트가 몇개 없을 때
 이럴 땐 그냥 props 쓰는게 더 코드가 짧습니다.
+
+-Redux store에 state 보관하는 법
+
+step 1. createSlice( ) 로 state 만들고
+step 2. configureStore( ) 안에 등록하면 됩니다.
+configureStore에 등록한 state는 모든 컴포넌트가 자유롭게 사용가능합니다.
+
+-Redux store에 있던 state 가져다쓰는 법
+useSelector((state) => { return state } ) 쓰면 store에 있던 모든 state가 그 자리에 남습니다. useSelector((state) => state.user ) 이런 식으로 쓰면 좀 더 편리할 수도 있습니다.
+
+-Redux state 변경하는법
+state를 수정하는 함수(reducers)를 slice내부에 만들고, 원할때 그 함수를 실행해달라고 store.js에 요청해야한다. 함수는 기존 state를 파라미터로 받음, 여러개의 함수 추가 가능.
+함수를 만들고, export를 해야한다. 스테이트 보관함(변수이름)의 이름.actions로 저장하면 객체형태로 남는다. 구조분해 할당으로 사용하자.
+필요한 곳에서 useDispatch(변경함수)형태로 사용하자.
+
+이런 방식이 어려워 보일 수 있으나, 크기가 큰 프로젝트에선 버그 방지 목적의 측면에서는 우수하다. state가 매우 많다고 가정할 때에, 수정함수를 dispatch를 통해서 요청하는데, 요청하는 애들 추적할 수 있기 때문에(모든 컴포넌트에서 직접 state를 수정하면 범인 찾기 불가능, 중간에 dispatch에게 부탁해서 함수를 호출해서 state를 변경해야 하기 때문. dispatch가 있기때문에 중간에서 범인 색출 가능), 범인을 찾기 수월하다.
+
+-state가 arr/obj인 경우 변경함수 작성법
+직접 접근해서 state를 직접 변경해도 가능하지만,
+
+1. 수정함수만들기
+2. export/import하기
+3. dispatch(수정함수()) 에 담아서 사용하기. 수정함수()의 파라미터는 store의 수정함수의 2번째 파라미터(action)의 action.payload 로 들어온다.

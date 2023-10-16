@@ -45,3 +45,8 @@
   transform: scale(1);
   transition: 0.5s;
 }
+
+.hoverItem:hover {
+  transform: scale(0.95);
+  transition: 0.3s;
+}
