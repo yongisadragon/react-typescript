@@ -109,7 +109,7 @@ export default function Detail({ shoes }) {
                       count: 1,
                     })
                   );
-                  // navigate("/cart");
+                  navigate("/cart");
                 }}
               >
                 주문하기

@@ -8,7 +8,7 @@ let cart = createSlice({
   name: "cart",
   initialState: [
     { id: 0, name: "White and Black", count: 2 },
-    { id: 1, name: "Grey Yordan", count: 1 },
+    { id: 2, name: "Grey Yordan", count: 1 },
   ],
   reducers: {
     increaseCount(state, action) {
@@ -19,12 +19,23 @@ let cart = createSlice({
       state[matchNum].count++;
     },
     addItem(state, action) {
-      state.push(action.payload);
+      // 일반적으로 state.push(action.payload)도 됨. 스프레드는 iterable해야하는듯. 그래서 payload값 배열로 설정해줬음.
+      // find 못하면 undefined. 찾으면 첫번째 요소 넣어줌.
+      let matchItem = state.find((a) => a.id == action.payload.id);
+      if (matchItem) {
+        matchItem.count++;
+      } else {
+        state.push(action.payload);
+      }
+    },
+    deleteItem(state, action) {
+      let matchNum = state.findIndex((a) => a.id === action.payload);
+      state.splice(matchNum, 1);
     },
   },
 });
 
-export let { increaseCount, addItem } = cart.actions;
+export let { increaseCount, addItem, deleteItem } = cart.actions;
 
 // confiureStore는 slice를 등록하는 곳이다. 규격에 맞춰야함. => 변수.reducer가 store에 등록하는 동작이며, 왼쪽 작명이름은 보통 변수와 이름을 맞춘다. 다른 파일에서 useSelector로 사용할때에는 왼쪽 이름을 끌어다 쓴다.
 export default configureStore({
