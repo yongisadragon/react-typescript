@@ -36,13 +36,16 @@ export default function Detail({ shoes }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const inputHandler = (e) => {
+    setInputTxt(e.target.value);
+  };
+
   useEffect(() => {
     // 변수에 담아서 setTimeout해도 동작함. 이렇게 담으면 장점이 클린업 함수에서 제거할 수 있음.
     let timer = setTimeout(() => {
       //이건 매우 생자바스크립트 방식
       // document.querySelector(".alerted").style.display = "none";
       setalerted(false); // ui 꺼주세요..
-      console.log(2);
       return () => {
         //useEffect 동작 전에 실행되는 return ()=>{}, 클린업 함수눈 mount시엔 실행x, unmount시에는 실행됨.
         //예를 들어 서버에서 데이터 요청과 관련된 버그를 없애기 위해 사용하기도 함.
@@ -52,10 +55,6 @@ export default function Detail({ shoes }) {
     }, 2000);
   }, []);
   //배열안에 다른값이 있으면 그 값이 변할때마다 실행 + mount 될때마다 실행 2가지 조건이 실행되기 때문에, 의존성 배열을 비우는것은 일종의 편법임(mount에만 실행되도록)
-
-  const inputHandler = (e) => {
-    setInputTxt(e.target.value);
-  };
 
   //input값에 숫자 이외엔 허용하지 않는 함수를 만드려면?
   useEffect(() => {
@@ -71,6 +70,16 @@ export default function Detail({ shoes }) {
     return () => {
       setFade2("");
     };
+  }, []);
+
+  useEffect(() => {
+    let get_local = localStorage.getItem("watched");
+    let parsed = JSON.parse(get_local);
+    parsed.push(일치상품.id);
+
+    // 중복된 값이 싫다면 Set 자료형으로 제거해주셔도 됩니당.
+    // parsed = [...new Set(parsed)];
+    localStorage.setItem("watched", JSON.stringify(parsed));
   }, []);
 
   return (

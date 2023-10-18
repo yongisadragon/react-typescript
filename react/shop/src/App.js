@@ -1,7 +1,7 @@
 import "./App.css";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import 이미지1 from "./img/18ac3091-5615-4b51-b833-f3d8f909b35c.webp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { data } from "./data";
 import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Detail from "./pages/Detail";
@@ -9,16 +9,33 @@ import axios from "axios";
 import Cart from "./pages/Cart";
 
 function App() {
+  // 쌩 obj를 setItem하면 [object Object] 이딴식으로 깨져버릴 것입니다. stringify를 하면 {"name":"lee"} 요런식으로 문자열화 될것입니다.
+  let obj = { name: "lee" };
+  localStorage.setItem("data", JSON.stringify(obj));
+  let 꺼낸거 = localStorage.getItem("data");
+  console.log(JSON.parse(꺼낸거));
+
   let [shoes, setSheos] = useState(data);
   let [isLoading, setIsLoading] = useState(false);
   let [count, setCount] = useState(0);
   let navigate = useNavigate();
 
+  useEffect(() => {
+    let watched = localStorage.getItem("watched");
+    localStorage.setItem("watched", JSON.stringify([]));
+  }, []);
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="/">YONGISA MART</Navbar.Brand>
+          <Navbar.Brand
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            YONGISA MART
+          </Navbar.Brand>
           <Nav className="my-4 me-auto">
             <Nav.Link
               onClick={() => {
