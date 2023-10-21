@@ -19,7 +19,7 @@ function App() {
   let obj = { name: "lee" };
   localStorage.setItem("data", JSON.stringify(obj));
   let 꺼낸거 = localStorage.getItem("data");
-  console.log(JSON.parse(꺼낸거));
+  // console.log(JSON.parse(꺼낸거));
 
   let [shoes, setSheos] = useState(data);
   let [isLoading, setIsLoading] = useState(false);
@@ -40,13 +40,13 @@ function App() {
     "작명",
     () =>
       axios.get("https://codingapple1.github.io/userdata.json").then((a) => {
-        console.log("요청됨");
+        // console.log("요청됨");
         return a.data;
       }),
     // 3초안에는 refetch안됨.
     { staleTime: 3000 }
   );
-  console.log(result);
+  // console.log(result);
 
   return (
     <div className="App">
