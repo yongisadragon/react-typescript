@@ -299,3 +299,5 @@ startTransition()으로 감싸면(콜백으로 업무를 보내버리면)
 
 그렇다면 첫번째 변수 isPending 은 무엇인가요.
 startTrasition이 처리 중일때에 true 상태가 되는 변수입니다!.
+
+useDeferredValue(state) 를 변수에 담아써도 해당 state를 나중에 처리해줌.
