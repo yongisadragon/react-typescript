@@ -31,10 +31,10 @@ OR 연산자 같은 느낌인데 이런 타입을 전문용어로 Union type 이
 React에서 TS 쓰는법 요약
 변수, 함수 만들 때 타입 지정하면 그게 전부임
 
-새로운 react-ts
+* 새로운 react-ts 생성
 `npx create-react-app 프로젝트명 --template typescript`
 
-기존프로젝트
+* 기존프로젝트에 생성
 `npm install --save typescript @types/node @types/react @types/react-dom @types/jest`
 
 기본적으로 .ts
