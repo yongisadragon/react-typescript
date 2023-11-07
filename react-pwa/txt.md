@@ -23,6 +23,7 @@ A. 맞습니다.
 3. router, redux 이런 라이브러리를 설치했다면 그것도 새프로젝트에서 다시 설치하시면 됩니다.
 
 PWA는 manifest.js와 service-worker.js 가 필요한데 npx했으면 자동으로 깔려있습니다.
+
 public/manifest 에 앱이름,,아이콘.. 시작 url(첫페이지) 등등 설정할 수 있는 파일임. (플랫폼마다 요구하는 사이즈가 다르게 때문에 여러가지로 준비돼있습니당.)
 앱처럼 보이기위한
 "display": "standalone", 설정은 상단 바 없어짐.
@@ -32,4 +33,28 @@ index.js에 serviceWorkerRegistration.unregister(); 를 register로 바꿔야 �
 
 asset-manifest.json 에 미리 캐싱할 파일들을 선언돼있음.(오프라인에서 사용 가능) 궁금하면 build 폴더만 따로 code . 로 열어서 라이브서버 띄워보시든가요 -> 그럼 아마 브라우저 상단에 설치버튼도 생겼을 거임. (그게 PWA임) 자주 바뀔수 있는 css파일..은 (의미가 없긴 하지만) node_modules/react-script/config/webpack.config.js 에서 InjectMenifest 에서 exclude에 내가 원하지 않는 파일을 정규식으로 등록하셈. .찎을땐 백슬래시 추가해서.
 
+```
+new WorkboxWebpackPlugin.InjectManifest({
+    swSrc,
+    dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+    exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
+..
+)}
+```
+
+근데 여러분 사이트가 페이스북, 인스타, 유튜브처럼 입장과 동시에 Ajax로 초기데이터들을 전부 받아오는 사이트라면 굳이 HTML 파일을 저렇게 할 필요는 없겠죠? 맞습니다. 쓸데없습니다.
+
+이외에도 디버깅..
 브라우저 도구에서 Application 탭에 들어가면 manifest / service 잘 동작 하는지 나와있음.
+
+manifest.json
+{
+"version" : "여러분앱의 버전.. 예를 들면 1.12 이런거",
+"short_name" : "설치후 앱런처나 바탕화면에 표시할 짧은 12자 이름",
+"name" : "기본이름",
+"icons" : { 여러가지 사이즈별 아이콘 이미지 경로 },
+"start_url" : "앱아이콘 눌렀을 시 보여줄 메인페이지 경로",
+"display" : "standalone 아니면 fullscreen",
+"background_color" : "앱 처음 실행시 잠깐 뜨는 splashscreen의 배경색",
+"theme_color" : "상단 탭색상 등 원하는 테마색상",
+}
