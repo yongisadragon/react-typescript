@@ -76,7 +76,7 @@ export type RootState = ReturnType<typeof store.getState>
 export let {increment, decrement, incrementByAmount} = counterSlice.actions
 ```
 
-꺼내온거 쓸때에는
+꺼내온거 쓸때에는 이렇게 합니다.
 
 ```
 import { useDispatch, useSelector } from 'react-redux'
