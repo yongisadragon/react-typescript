@@ -31,11 +31,11 @@ OR 연산자 같은 느낌인데 이런 타입을 전문용어로 Union type 이
 React에서 TS 쓰는법 요약
 변수, 함수 만들 때 타입 지정하면 그게 전부임
 
-* 새로운 react-ts 생성
-`npx create-react-app 프로젝트명 --template typescript`
+- 새로운 react-ts 생성
+  `npx create-react-app 프로젝트명 --template typescript`
 
-* 기존프로젝트에 생성
-`npm install --save typescript @types/node @types/react @types/react-dom @types/jest`
+- 기존프로젝트에 생성
+  `npm install --save typescript @types/node @types/react @types/react-dom @types/jest`
 
 기본적으로 .ts
 react내부에서 jsx문법이 있다하면 .tsx (html있는 파일)
@@ -53,3 +53,8 @@ assertion 하고 싶으면 as 또는 <> 쓰면 되는데
 as 키워드만 씁시다.
 
 하지만 as 키워드는 타입스크립트 보안해제기 때문에 타입이 100% 확실할 때만 사용하도록 합시다.
+
+### 1123
+
+// declare&ambient mudule
+코드 짜다보면 외부 자바스크립트 파일(변수) 를 .ts에서 이용하고 싶은 경우가 생긴다.
