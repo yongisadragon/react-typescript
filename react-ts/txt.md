@@ -33,7 +33,7 @@ as 키워드만 씁시다.
 1. 모든 컴포넌트가 state 공유가능
 2. 수정방법을 파일 한 곳에 정의해둠.
 
-리덕스는 복잡하니 toolkit의 타입지정법 알아봅시다.
+리덕스는 복잡하니 `toolkit`의 타입지정법 알아봅시다.
 
 타입지정은
 
@@ -47,6 +47,7 @@ import { Provider } from 'react-redux';
 
 const 초기값 = { count: 0, user : 'kim' };
 
+//참고로 slice는 `state+reducer(함수형태)` 형태로, 기존 redux를 보완한 toolkit에서 사용됨. action은 PayloadAction라는 타입을 불러오면됨.
 const counterSlice = createSlice({
   name: 'counter',
   initialState : 초기값,
