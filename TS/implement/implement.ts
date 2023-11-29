@@ -22,7 +22,8 @@ class Carr2 implements CarType {
     return a * 0.1;
   }
 }
-let 붕붕이3 = new Carr2("morning");
+let 붕붕이3 = new Carr2();
+붕붕이3.tax("하이");
 
 // 지금 CarType을 implements 했냐고 써봤습니다. 근데 CarType에 있던 model : string 이런게 반영되는건 아닙니다. class 안에서의 model은 any 타입임
 
